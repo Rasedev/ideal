@@ -1,0 +1,181 @@
+/* .custom-stats-tabs .ant-tabs-nav {
+  margin-bottom: 12px;
+}
+
+.custom-stats-tabs .ant-tabs-tab {
+  padding: 8px 16px !important;
+  font-weight: 600;
+}
+
+.custom-stats-tabs .ant-tabs-tab-active {
+  background: #1890ff;
+  border-radius: 6px;
+}
+
+.custom-stats-tabs .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: white !important;
+}
+
+.custom-stats-tabs .ant-tabs-ink-bar {
+  display: none;
+}
+
+.chat-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-sidebar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.chat-sidebar::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.chat-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+} */
+
+
+
+
+
+/* Chat Sidebar Specific Styles */
+.chat-sidebar {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.chat-sidebar .ant-list-item {
+  transition: all 0.2s ease-in-out;
+}
+
+.chat-sidebar .ant-avatar {
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.chat-sidebar .ant-avatar:hover {
+  border-color: #1890ff;
+}
+
+/* Custom scrollbar for chat sidebar */
+.chat-sidebar .ant-list {
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f1f1f1;
+}
+
+.chat-sidebar .ant-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-sidebar .ant-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+.chat-sidebar .ant-list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 2px;
+}
+
+.chat-sidebar .ant-list::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Header specific styles */
+.ant-layout-header {
+  transition: all 0.3s ease;
+}
+
+/* Theme specific styles */
+.theme-dark {
+  background-color: #1f2937;
+  color: #f9fafb;
+}
+
+.theme-dark .ant-layout-header {
+  background-color: #111827;
+  border-bottom-color: #374151;
+}
+
+.theme-dark .chat-sidebar {
+  background-color: #111827;
+  color: #f9fafb;
+}
+
+.theme-dark .chat-sidebar .ant-card {
+  background-color: #111827;
+  border-color: #374151;
+}
+
+.theme-dark .chat-sidebar .ant-card .ant-typography {
+  color: #f9fafb;
+}
+
+.theme-dark .chat-sidebar .ant-list-item:hover {
+  background-color: #1f2937;
+}
+
+/* Theme toggle switch customization */
+.ant-switch.ant-switch-checked {
+  background-color: #1890ff;
+}
+
+.ant-switch:not(.ant-switch-checked) {
+  background-color: #d1d5db;
+}
+
+/* Badge customization */
+.ant-badge-count {
+  font-size: 10px;
+  font-weight: 600;
+  box-shadow: 0 0 0 1px #fff;
+}
+
+.ant-badge-dot {
+  box-shadow: 0 0 0 1px #fff;
+}
+
+/* Avatar gradient backgrounds */
+.avatar-gradient-blue {
+  background: linear-gradient(135deg, #1890ff 0%, #722ed1 100%);
+}
+
+.avatar-gradient-purple {
+  background: linear-gradient(135deg, #722ed1 0%, #eb2f96 100%);
+}
+
+.avatar-gradient-green {
+  background: linear-gradient(135deg, #52c41a 0%, #13c2c2 100%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .chat-sidebar {
+    margin-top: 16px;
+  }
+  
+  .ant-layout-header {
+    padding: 0 16px;
+  }
+}
+
+/* Animation for theme transition */
+.theme-transition * {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* /////////////////sidebar.css//////////////////////// */
+
+.sidebar-menu .ant-menu-item:hover {
+    background: linear-gradient(90deg, #e3f2fd7d, #bbdefb);
+    transform: translateX(3px);
+    color: #111827 !important;
+}
+
+.sidebar-menu .ant-menu-item-selected {
+    background: linear-gradient(90deg, #e3f2fd7d, #bbdefb);
+    color: white !important;
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
+}

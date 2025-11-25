@@ -1,0 +1,231 @@
+
+
+/* 
+///////////////////////NEW ////////////////////////////// */
+/* 
+.button_F {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.button_F button {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  background: #00abc9;
+  -webkit-mask: url("https://raw.githubusercontent.com/robin-dela/css-mask-animation/master/img/nature-sprite.png");
+  mask: url("https://raw.githubusercontent.com/robin-dela/css-mask-animation/master/img/nature-sprite.png");
+  -webkit-mask-size: 2300% 100%;
+  mask-size: 2300% 100%;
+  -webkit-animation: ani2 0.7s steps(22) forwards;
+  animation: ani2 0.7s steps(22) forwards;
+}
+
+.button_F button:hover {
+  background: #fff !important;
+  -webkit-animation: ani 0.7s steps(22) forwards;
+  animation: ani 0.7s steps(22) forwards;
+  color: #fff !important;
+}
+
+.contact_mas {
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@-webkit-keyframes ani {
+  from {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+  to {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+}
+
+@keyframes ani {
+  from {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+  to {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+}
+
+@-webkit-keyframes ani2 {
+  from {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+  to {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+}
+
+@keyframes ani2 {
+  from {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+  to {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+}
+
+
+
+ */
+
+
+
+.button_F {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  border-radius: 2px;
+  transition: all 0.5s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.button_F button {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  background: #00abc9;
+  border: none;
+  -webkit-mask: url("https://raw.githubusercontent.com/robin-dela/css-mask-animation/master/img/nature-sprite.png");
+  mask: url("https://raw.githubusercontent.com/robin-dela/css-mask-animation/master/img/nature-sprite.png");
+  -webkit-mask-size: 2300% 100%;
+  mask-size: 2300% 100%;
+  -webkit-animation: ani2 0.7s steps(22) forwards;
+  animation: ani2 0.7s steps(22) forwards;
+  /* border-radius: 8px; */
+}
+
+.button_F button:hover {
+  background: #fff !important;
+  -webkit-animation: ani 0.7s steps(22) forwards;
+  animation: ani 0.7s steps(22) forwards;
+}
+
+.contact_mas {
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  pointer-events: none;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+}
+
+.button_F:hover .contact_mas {
+  color: #000000 !important;
+}
+
+/* Primary variant specific styles */
+.button_F[style*="background-color: #00abc9"]:hover .contact_mas {
+  color: #ffffff !important;
+}
+
+/* Secondary variant specific styles */
+.button_F[style*="background-color: transparent"]:hover .contact_mas {
+  color: #00abc9 !important;
+}
+
+.button-icon {
+  display: flex;
+  align-items: center;
+}
+
+@-webkit-keyframes ani {
+  from {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+  to {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+}
+
+@keyframes ani {
+  from {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+  to {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+}
+
+@-webkit-keyframes ani2 {
+  from {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+  to {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+}
+
+@keyframes ani2 {
+  from {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+  to {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact_mas {
+    font-size: 12px;
+    gap: 6px;
+  }
+  
+  .button_F {
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact_mas {
+    font-size: 11px;
+    letter-spacing: 0.3px;
+  }
+}
+

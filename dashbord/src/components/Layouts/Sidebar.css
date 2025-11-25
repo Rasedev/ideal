@@ -1,0 +1,330 @@
+/* Custom scrollbar for sidebar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #4a5568;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #718096;
+}
+
+/* Sidebar container and menu base styles */
+.sidebar-container {
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.sidebar-menu.ant-menu {
+  background: transparent !important;
+  border: none !important;
+  padding-top: 12px !important; /* Add spacing at top of entire menu */
+}
+
+/* Main menu items with proper spacing */
+.sidebar-menu .ant-menu-item {
+  border-radius: 8px !important;
+  margin: 4px 8px !important; /* Increased vertical margin */
+  height: 40px !important;
+  line-height: 40px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+}
+/* First menu item (Dashboard) - extra top spacing */
+.sidebar-menu .ant-menu-item:first-child,
+.sidebar-menu .ant-menu-submenu:first-child .ant-menu-submenu-title {
+  margin-top: 8px !important; /* Extra space for first item */
+}
+
+/* Submenu titles */
+.sidebar-menu .ant-menu-submenu-title {
+  border-radius: 8px !important;
+  margin: 4px 8px !important; /* Consistent spacing */
+  height: 40px !important;
+  line-height: 40px !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Active/Selected menu item */
+.sidebar-menu .ant-menu-item-selected {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important;
+}
+
+.sidebar-menu .ant-menu-item-selected .ant-menu-title-content,
+.sidebar-menu .ant-menu-item-selected .anticon {
+  color: white !important;
+}
+
+/* Submenu container with connecting line */
+.sidebar-menu .ant-menu-sub {
+  background: transparent !important;
+  position: relative;
+  padding-left: 24px !important;
+  padding-top: 4px !important; /* Add spacing at top of submenu */
+  padding-bottom: 4px !important; /* Add spacing at bottom of submenu */
+}
+
+/* Main vertical connecting line */
+.sidebar-menu .ant-menu-submenu > .ant-menu-sub::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 8px; /* Start below top padding */
+  bottom: 8px; /* End above bottom padding */
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #667eea 15%,
+    #667eea 85%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: all 0.3s ease;
+  border-radius: 1px;
+}
+
+/* Show the vertical line when submenu is open */
+.sidebar-menu .ant-menu-submenu-open > .ant-menu-sub::before {
+  opacity: 1;
+}
+
+/* Submenu items with dot connectors */
+.sidebar-menu .ant-menu-sub .ant-menu-item {
+  margin: 2px 0 !important; /* Spacing between submenu items */
+  border-radius: 6px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  padding-left: 32px !important;
+  position: relative;
+  transition: all 0.3s ease !important;
+  background: transparent !important;
+}
+
+/* Horizontal connector line */
+.sidebar-menu .ant-menu-sub .ant-menu-item::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  width: 12px;
+  height: 2px;
+  background: #667eea;
+  transform: translateY(-50%);
+  opacity: 0.6;
+  border-radius: 1px;
+}
+
+/* Dot indicator */
+.sidebar-menu .ant-menu-sub .ant-menu-item::after {
+  content: '';
+  position: absolute;
+  left: 28px;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  background: #667eea;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  transition: all 0.3s ease;
+}
+
+/* Hover states */
+.sidebar-menu .ant-menu-item:hover,
+.sidebar-menu .ant-menu-submenu-title:hover {
+  background: rgba(102, 126, 234, 0.08) !important;
+  transform: translateX(4px) !important;
+}
+
+.sidebar-menu .ant-menu-sub .ant-menu-item:hover {
+  background: rgba(102, 126, 234, 0.08) !important;
+  transform: translateX(4px) !important;
+}
+
+.sidebar-menu .ant-menu-sub .ant-menu-item:hover::before {
+  opacity: 1;
+  background: #764ba2;
+}
+
+.sidebar-menu .ant-menu-sub .ant-menu-item:hover::after {
+  background: #764ba2;
+  transform: translateY(-50%) scale(1.2);
+}
+
+/* Active submenu item */
+.sidebar-menu .ant-menu-sub .ant-menu-item-selected {
+  background: rgba(102, 126, 234, 0.12) !important;
+  color: #667eea !important;
+  font-weight: 500;
+}
+
+.sidebar-menu .ant-menu-sub .ant-menu-item-selected::before {
+  opacity: 1;
+  background: #667eea;
+  width: 16px;
+}
+
+.sidebar-menu .ant-menu-sub .ant-menu-item-selected::after {
+  background: #667eea;
+  transform: translateY(-50%) scale(1.5);
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+/* Open submenu title style */
+.sidebar-menu .ant-menu-submenu-open > .ant-menu-submenu-title {
+  background: rgba(102, 126, 234, 0.1) !important;
+  color: #667eea !important;
+  font-weight: 500;
+}
+
+/* Hover text and icon colors */
+.sidebar-menu .ant-menu-item:hover .ant-menu-title-content,
+.sidebar-menu .ant-menu-submenu-title:hover .ant-menu-title-content,
+.sidebar-menu .ant-menu-item:hover .anticon,
+.sidebar-menu .ant-menu-submenu-title:hover .anticon {
+  color: #667eea !important;
+}
+
+/* Submenu arrow animation */
+.sidebar-menu .ant-menu-submenu-arrow {
+  transition: all 0.3s ease !important;
+}
+
+.sidebar-menu .ant-menu-submenu-open .ant-menu-submenu-arrow {
+  transform: rotate(90deg) !important;
+  color: #667eea !important;
+}
+
+/* Icon animations */
+.sidebar-menu .anticon {
+  transition: all 0.3s ease !important;
+}
+
+.sidebar-menu .ant-menu-item:hover .anticon,
+.sidebar-menu .ant-menu-submenu-title:hover .anticon {
+  transform: scale(1.1) !important;
+}
+
+/* Dark mode support */
+.dark .sidebar-menu .ant-menu-item,
+.dark .sidebar-menu .ant-menu-submenu-title {
+  color: #e2e8f0 !important;
+}
+
+.dark .sidebar-menu .ant-menu-sub::before {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #8b5cf6 15%,
+    #8b5cf6 85%,
+    transparent 100%
+  );
+}
+
+.dark .sidebar-menu .ant-menu-sub .ant-menu-item::before {
+  background: #8b5cf6;
+}
+
+.dark .sidebar-menu .ant-menu-sub .ant-menu-item::after {
+  background: #8b5cf6;
+}
+
+.dark .sidebar-menu .ant-menu-item-selected {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+}
+
+.dark .sidebar-menu .ant-menu-submenu-open > .ant-menu-submenu-title {
+  background: rgba(139, 92, 246, 0.15) !important;
+  color: #8b5cf6 !important;
+}
+
+.dark .sidebar-menu .ant-menu-sub .ant-menu-item:hover {
+  background: rgba(139, 92, 246, 0.1) !important;
+}
+
+.dark .sidebar-menu .ant-menu-sub .ant-menu-item-selected {
+  background: rgba(139, 92, 246, 0.2) !important;
+  color: #8b5cf6 !important;
+}
+
+/* Nested submenu levels */
+.sidebar-menu .ant-menu-sub .ant-menu-sub {
+  padding-left: 40px !important;
+}
+
+.sidebar-menu .ant-menu-sub .ant-menu-sub::before {
+  left: 32px;
+}
+
+.sidebar-menu .ant-menu-sub .ant-menu-sub .ant-menu-item {
+  padding-left: 48px !important;
+}
+
+.sidebar-menu .ant-menu-sub .ant-menu-sub .ant-menu-item::before {
+  left: 32px;
+  width: 8px;
+}
+
+.sidebar-menu .ant-menu-sub .ant-menu-sub .ant-menu-item::after {
+  left: 40px;
+}
+
+/* Collapsed state adjustments */
+.sidebar-menu.ant-menu-inline-collapsed .ant-menu-sub::before,
+.sidebar-menu.ant-menu-inline-collapsed .ant-menu-sub .ant-menu-item::before,
+.sidebar-menu.ant-menu-inline-collapsed .ant-menu-sub .ant-menu-item::after {
+  display: none;
+}
+
+.sidebar-menu.ant-menu-inline-collapsed .ant-menu-item,
+.sidebar-menu.ant-menu-inline-collapsed .ant-menu-submenu-title {
+  margin: 2px 4px !important; /* Reduced spacing in collapsed mode */
+}
+
+/* Remove Ant Design default backgrounds */
+:where(.css-dev-only-do-not-override-1a03kok).ant-layout-sider-light,
+:where(.css-dev-only-do-not-override-1a03kok).ant-layout-sider {
+  background: none !important;
+}
+
+/* Menu title content */
+.sidebar-menu .ant-menu-title-content {
+  transition: color 0.3s ease !important;
+  font-weight: 500 !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .sidebar-collapsed {
+    position: fixed !important;
+    left: -100% !important;
+    z-index: 1000 !important;
+    transition: left 0.3s ease !important;
+  }
+  
+  .sidebar-expanded {
+    position: fixed !important;
+    left: 0 !important;
+    z-index: 1000 !important;
+    height: 100vh !important;
+    transition: left 0.3s ease !important;
+  }
+}

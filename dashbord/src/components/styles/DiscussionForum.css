@@ -1,0 +1,142 @@
+/* components/community/DiscussionForum.css */
+.discussion-forum {
+  padding: 20px;
+}
+
+.discussion-filters {
+  padding: 16px 0;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 16px;
+}
+
+.discussion-card {
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f0;
+}
+
+.discussion-card:hover {
+  border-color: #1890ff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.discussion-header {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.discussion-title {
+  margin: 0 !important;
+  color: #262626;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.pinned-icon {
+  color: #ff4d4f;
+}
+
+.locked-icon {
+  color: #faad14;
+}
+
+.category-tag {
+  margin: 0;
+}
+
+.discussion-content {
+  color: #595959;
+  margin-bottom: 16px;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.discussion-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.discussion-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.author-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.author-name {
+  color: #595959;
+  font-size: 14px;
+}
+
+.replies-count,
+.views-count,
+.created-date {
+  color: #8c8c8c;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.discussion-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.discussion-tag {
+  font-size: 11px;
+  margin: 0;
+}
+
+.discussion-pagination {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.create-discussion-modal .ant-modal-body {
+  padding: 24px;
+}
+
+.form-actions {
+  margin-bottom: 0;
+  text-align: right;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .discussion-forum {
+    padding: 10px;
+  }
+  
+  .discussion-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .discussion-meta {
+    gap: 8px;
+  }
+  
+  .discussion-meta > span {
+    font-size: 11px;
+  }
+}

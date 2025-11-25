@@ -1,0 +1,83 @@
+/* components/community/CommunityHub.css */
+.community-hub {
+  padding: 20px;
+}
+
+.community-hub .quick-actions-card .action-card {
+  text-align: center;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f0;
+}
+
+.community-hub .quick-actions-card .action-card:hover {
+  border-color: #1890ff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.community-hub .action-content .action-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: #1890ff;
+}
+
+.community-hub .action-content h4 {
+  margin: 0 0 4px 0;
+  color: #262626;
+}
+
+.community-hub .action-content p {
+  margin: 0;
+  color: #8c8c8c;
+  font-size: 12px;
+}
+
+.community-hub .module-card {
+  text-align: center;
+  height: 120px;
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f0;
+}
+
+.community-hub .module-card:hover {
+  border-color: #52c41a;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.community-hub .module-icon {
+  font-size: 32px;
+  color: #52c41a;
+  margin-bottom: 8px;
+}
+
+.community-hub .module-card h4 {
+  margin: 0 0 4px 0;
+  color: #262626;
+}
+
+.community-hub .module-card p {
+  margin: 0;
+  color: #8c8c8c;
+  font-size: 12px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .community-hub {
+    padding: 10px;
+  }
+  
+  .community-hub .quick-actions-card .action-card,
+  .community-hub .module-card {
+    height: 100px;
+  }
+  
+  .community-hub .module-icon {
+    font-size: 24px;
+  }
+}

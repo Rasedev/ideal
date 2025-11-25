@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Base Body Styling */
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ========== THEME STYLES ========== */
+
+/* Light Theme (Default) */
+.theme-light {
+  background-color: #ffffff;
+  color: #111827;
+}
+
+/* Dark Theme */
+.theme-dark {
+  background-color: #0f172a;
+  color: #f9fafb;
+}
+
+/* Smooth Theme Transition */
+.theme-transition * {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease !important;
+}
+
+/* ========== DARK THEME OVERRIDES (Ant Design) ========== */
+
+.theme-dark .ant-layout-content {
+  background-color: #1f2937;
+}
+
+.theme-dark .ant-card {
+  background-color: #111827;
+  border: 1px solid #374151;
+  color: #f9fafb;
+}
+
+.theme-dark .ant-card .ant-card-head-title,
+.theme-dark .ant-typography,
+.theme-dark .ant-menu-item,
+.theme-dark .ant-menu {
+  color: #f9fafb;
+  background-color: #111827;
+}
+
+.theme-dark .ant-menu-item:hover {
+  color: #1890ff;
+}
+
+.theme-dark .ant-input,
+.theme-dark .ant-input-affix-wrapper {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f9fafb;
+}
+
+.theme-dark .ant-input::placeholder {
+  color: #9ca3af;
+}
+
+.theme-dark .ant-input-affix-wrapper .ant-input {
+  background-color: transparent;
+}
+
+.theme-dark .ant-statistic-content {
+  color: #f9fafb;
+}
+
+.theme-dark .ant-table-thead > tr > th {
+  background: #374151;
+  border-bottom: 1px solid #4b5563;
+}
+
+/* ========== SCROLLBAR (Dark Theme Only) ========== */
+.theme-dark ::-webkit-scrollbar {
+  width: 6px;
+}
+
+.theme-dark ::-webkit-scrollbar-track {
+  background: #374151;
+}
+
+.theme-dark ::-webkit-scrollbar-thumb {
+  background: #6b7280;
+  border-radius: 3px;
+}
+
+.theme-dark ::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* ========== DASHBOARD COMPONENT STYLES ========== */
+
+/* Card Hover Effects */
+.dashboard-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Statistic Card Shine Animation */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.stat-card:hover::before {
+  left: 100%;
+}
+
+/* Loading Animation (Skeleton Effect) */
+.dashboard-loading {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ========== RESPONSIVENESS ========== */
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    margin-bottom: 1rem;
+  }
+}

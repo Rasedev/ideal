@@ -1,0 +1,525 @@
+/* 
+.app-header {
+  background: white !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+  padding: 0 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  height: 64px !important;
+}
+
+.dark .app-header {
+  background: #1f2937 !important;
+  border-bottom-color: #374151 !important;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.header-center {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  max-width: 400px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+
+.sidebar-toggle-btn {
+  color: #6b7280 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.sidebar-toggle-btn:hover {
+  color: #374151 !important;
+  background: #f3f4f6 !important;
+}
+
+.dark .sidebar-toggle-btn {
+  color: #9ca3af !important;
+}
+
+.dark .sidebar-toggle-btn:hover {
+  color: #e5e7eb !important;
+  background: #374151 !important;
+}
+
+
+.welcome-section {
+  margin-left: 16px;
+}
+
+.welcome-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.welcome-subtitle {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.dark .welcome-title {
+  color: #f9fafb;
+}
+
+.dark .welcome-subtitle {
+  color: #9ca3af;
+}
+
+
+.header-search {
+  max-width: 400px;
+}
+
+.header-search .ant-input-group .ant-input {
+  border-radius: 8px 0 0 8px;
+}
+
+.header-search .ant-input-group .ant-btn {
+  border-radius: 0 8px 8px 0;
+}
+
+
+.header-btn {
+  color: #6b7280 !important;
+  border: none !important;
+  border-radius: 6px !important;
+}
+
+.header-btn:hover {
+  color: #374151 !important;
+  background: #f3f4f6 !important;
+}
+
+.dark .header-btn {
+  color: #9ca3af !important;
+}
+
+.dark .header-btn:hover {
+  color: #e5e7eb !important;
+  background: #374151 !important;
+}
+
+
+.theme-toggle {
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.theme-toggle:hover {
+  background: #f3f4f6;
+}
+
+.dark .theme-toggle:hover {
+  background: #374151;
+}
+
+.theme-icon {
+  color: #6b7280;
+}
+
+.dark .theme-icon {
+  color: #9ca3af;
+}
+
+
+.user-dropdown-trigger {
+  padding: 4px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.user-dropdown-trigger:hover {
+  background: #f3f4f6;
+}
+
+.dark .user-dropdown-trigger:hover {
+  background: #374151;
+}
+
+.user-avatar-small {
+  border: 2px solid #e5e7eb;
+}
+
+.dark .user-avatar-small {
+  border-color: #4b5563;
+}
+
+.user-info-small {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.user-name-small {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.dark .user-name-small {
+  color: #e5e7eb;
+}
+
+.dropdown-arrow {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+
+.user-profile-dropdown .ant-dropdown-menu {
+  padding: 0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+.dark .user-profile-dropdown .ant-dropdown-menu {
+  background: #374151 !important;
+  border-color: #4b5563 !important;
+}
+
+.user-dropdown-content {
+  width: 320px;
+  padding: 0;
+  background: white;
+}
+
+.dark .user-dropdown-content {
+  background: #374151;
+  color: #f9fafb;
+}
+
+
+.user-profile-header {
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px 12px 0 0;
+}
+
+.user-avatar-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: white;
+}
+
+.user-title {
+  font-size: 14px;
+  margin: 0 0 4px 0;
+  opacity: 0.9;
+}
+
+.user-bio {
+  font-size: 12px;
+  margin: 0;
+  opacity: 0.8;
+}
+
+
+.user-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+}
+
+.stat-label {
+  display: block;
+  font-size: 11px;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+
+.dropdown-section {
+  padding: 16px 20px;
+}
+
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dark .section-title {
+  color: #9ca3af;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+
+.activity-item {
+  padding: 8px 0 !important;
+  border: none !important;
+}
+
+.activity-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.activity-icon {
+  color: #6b7280;
+  width: 16px;
+}
+
+.dark .activity-icon {
+  color: #9ca3af;
+}
+
+.activity-text {
+  font-size: 14px;
+  color: #374151;
+}
+
+.dark .activity-text {
+  color: #e5e7eb;
+}
+
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.action-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border: none !important;
+  color: white !important;
+}
+
+.dark .action-btn {
+  border-color: #4b5563 !important;
+  background: #4b5563 !important;
+  color: #e5e7eb !important;
+}
+
+
+.quick-actions {
+  padding: 12px 20px;
+  background: #f9fafb;
+  border-radius: 0 0 12px 12px;
+}
+
+.dark .quick-actions {
+  background: #4b5563;
+}
+
+.quick-actions-space {
+  width: 100%;
+  justify-content: space-between;
+}
+
+
+.notification-dropdown {
+  width: 280px;
+  padding: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.dark .notification-dropdown {
+  background: #374151;
+  border: 1px solid #4b5563;
+}
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.dark .dropdown-header {
+  border-bottom-color: #4b5563;
+}
+
+.dropdown-header h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.dark .dropdown-header h4 {
+  color: #e5e7eb;
+}
+
+.notification-item {
+  padding: 12px 16px !important;
+  border: none !important;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.notification-item:hover {
+  background: #f3f4f6;
+}
+
+.dark .notification-item:hover {
+  background: #4b5563;
+}
+
+
+.dropdown-divider {
+  margin: 0 !important;
+  border-color: #e5e7eb !important;
+}
+
+.dark .dropdown-divider {
+  border-color: #4b5563 !important;
+} */
+
+
+
+
+
+
+
+
+
+
+
+/* Custom scrollbar styling for dropdowns */
+.dropdown-container::-webkit-scrollbar {
+  width: 6px; /* ✅ controls scrollbar thickness */
+}
+
+.dropdown-container::-webkit-scrollbar-track {
+  background: transparent; /* or rgba(0,0,0,0.1) if you want visible track */
+}
+
+.dropdown-container::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.4); /* scrollbar color */
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.dropdown-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 100, 100, 0.7);
+}
+
+/* For Firefox */
+.dropdown-container {
+  scrollbar-width: thin; /* makes it narrower */
+  scrollbar-color: rgba(100,100,100,0.4) transparent;
+}
+
+/* :where(.css-dev-only-do-not-override-1a03kok).ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item {
+   padding: 0 !important;
+} */
+
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-center {
+    display: none;
+  }
+  
+  .welcome-section {
+    display: none;
+  }
+  
+  .user-info-small {
+    display: none;
+  }
+  
+  .user-dropdown-content {
+    width: 280px;
+  }
+}
+
+
+
+:where(.css-dev-only-do-not-override-d52lh8).ant-layout-header
+ {
+    height: 73px !important;
+    padding: 0 50px;
+    color: #f3f4f6;
+    line-height: 64px;
+    background: #1f2937;
+}
+
+
+.ant-dropdown {
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+/* Keep vertical scrollbar width stable to avoid layout shift when overlays open/close */
+html { scrollbar-gutter: stable; }
+
+/* Optional fallback for older browsers — always show vertical scrollbar */
+html { overflow-y: scroll; }
+
+
+
+
+
