@@ -393,6 +393,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['male', 'female', 'other']
   },
+   district: String,
   nationality: String,
   department: {
     type: String,
@@ -405,7 +406,7 @@ const userSchema = new mongoose.Schema({
   },
   joinDate: {
     type: Date,
-    // required: true
+  default: Date.now 
   },
   reportingManager: String,
   documents: [{
@@ -430,6 +431,31 @@ status: {
     },
     default: "Member"
   },
+  committeePosition: {
+  type: String,
+  enum: [
+     'Member',
+    'President',
+      'ExecutivePresident', 
+      'VicePresident',
+      'GeneralSecretary',
+      'JointGeneralSecretary',
+      'OrganizingSecretary',
+      'FinanceSecretary',
+      'PublicityAndPublicationSecretary',
+      'OfficeSecretary',
+      'SocialWelfareAffairsSecretary',
+      'LegalAffairsSecretary',
+      'ReligiousAffairsSecretary',
+      'PriyaAndCulturalAffairsSecretary',
+      'WomensAffairsSecretary',
+      'EnvironmentalAffairsSecretary',
+      'ExecutiveWorkingMember'
+  ],
+ default: undefined,   // <-- IMPORTANT FIX
+  required: false
+},
+
   emergencyContact: {
     name: String,
     relationship: String,
@@ -463,7 +489,6 @@ status: {
 
   // Profile
   profilePhoto: String,
- 
   dateOfBirth: Date,
   address: {
     street: String,
@@ -475,7 +500,9 @@ status: {
     },
     postalCode: String
   },
-
+   division: {
+      type: String,
+    },
   // Audit Fields
   lastLogin: Date,
   loginCount: {

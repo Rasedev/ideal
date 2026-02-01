@@ -205,7 +205,7 @@ const DashboardContent = () => {
 
   return (
     <div>
-      {showDebugInfo && (
+      {/* {showDebugInfo && (
         <Alert
           message="Dashboard Loaded"
           description={`Welcome ${user.firstName} (Role: ${user.role})`}
@@ -213,7 +213,7 @@ const DashboardContent = () => {
           showIcon
           className="mb-4"
         />
-      )}
+      )} */}
       {renderDashboard()}
     </div>
   );

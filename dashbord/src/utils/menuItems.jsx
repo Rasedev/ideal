@@ -50,12 +50,12 @@ export const menuConfig = {
         icon: <TeamOutlined />, 
         label: "All Members"
       },
-      { 
-        key: "/registrationsmember", 
-        icon: <SolutionOutlined />, 
-        label: "New Registrations",
-        roles: ["admin", "hr"]
-      },
+      // { 
+      //   key: "/registrationsmember", 
+      //   icon: <SolutionOutlined />, 
+      //   label: "New Registrations",
+      //   roles: ["admin", "hr"]
+      // },
       { 
         key: "/approvemember", 
         icon: <CheckCircleOutlined />, 

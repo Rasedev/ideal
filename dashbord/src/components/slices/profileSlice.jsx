@@ -15,6 +15,30 @@ const getAuthToken = () => {
 };
 
 // Async thunks for API calls
+// export const fetchUserProfile = createAsyncThunk(
+//   'profile/fetchUserProfile',
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const token = getAuthToken();
+//       if (!token) {
+//         return rejectWithValue('No authentication token found');
+//       }
+
+//       const response = await axios.get(`${BASE_URL}/user/profile`, {
+//         headers: { Authorization: `Bearer ${token}` }
+//       });
+      
+//       console.log('Profile API Response:', response.data);
+//       return response.data;
+//     } catch (error) {
+//       console.error('Fetch profile error:', error);
+//       return rejectWithValue(
+//         error.response?.data?.message || 'Failed to fetch profile'
+//       );
+//     }
+//   }
+// );
+// Update the fetchUserProfile thunk
 export const fetchUserProfile = createAsyncThunk(
   'profile/fetchUserProfile',
   async (_, { rejectWithValue }) => {
@@ -25,13 +49,42 @@ export const fetchUserProfile = createAsyncThunk(
       }
 
       const response = await axios.get(`${BASE_URL}/user/profile`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Cache-Control': 'no-cache'
+        }
       });
       
-      console.log('Profile API Response:', response.data);
-      return response.data;
+      console.log('✅ Profile API Response:', response.data);
+      
+      // Transform the response
+      const userData = response.data.user;
+      
+      // Ensure joinDate is properly formatted
+      if (userData.joinDate) {
+        userData.joinDate = new Date(userData.joinDate).toISOString();
+      }
+      
+      // Format address for display
+      if (userData.address) {
+        if (typeof userData.address === 'string') {
+          userData.addressDisplay = userData.address;
+        } else if (typeof userData.address === 'object') {
+          userData.addressDisplay = [
+            userData.address.street,
+            userData.address.city,
+            userData.address.state,
+            userData.address.country,
+            userData.address.postalCode
+          ]
+            .filter(Boolean)
+            .join(', ');
+        }
+      }
+      
+      return { ...response.data, user: userData };
     } catch (error) {
-      console.error('Fetch profile error:', error);
+      console.error('❌ Fetch profile error:', error);
       return rejectWithValue(
         error.response?.data?.message || 'Failed to fetch profile'
       );
@@ -39,28 +92,96 @@ export const fetchUserProfile = createAsyncThunk(
   }
 );
 
+// Add helper for date formatting
+const formatDateForForm = (dateString) => {
+  if (!dateString) return null;
+  try {
+    return dayjs(dateString);
+  } catch (error) {
+    console.error('Date formatting error:', error);
+    return null;
+  }
+};
+
+// export const updateUserProfile = createAsyncThunk(
+//   'profile/updateUserProfile',
+//   async (profileData, { rejectWithValue }) => {
+//     try {
+//       const token = getAuthToken();
+//       if (!token) {
+//         return rejectWithValue('No authentication token found');
+//       }
+
+//       const response = await axios.put(`${BASE_URL}/user/profile`, profileData, {
+//         headers: { Authorization: `Bearer ${token}` }
+//       });
+      
+//       return response.data;
+//     } catch (error) {
+//       console.error('Update profile error:', error);
+//       return rejectWithValue(
+//         error.response?.data?.message || 'Failed to update profile'
+//       );
+//     }
+//   }
+// );
+
+// In profileSlice.jsx, update the updateUserProfile thunk
 export const updateUserProfile = createAsyncThunk(
   'profile/updateUserProfile',
-  async (profileData, { rejectWithValue }) => {
+  async (profileData, { rejectWithValue, getState }) => {
     try {
       const token = getAuthToken();
       if (!token) {
         return rejectWithValue('No authentication token found');
       }
 
-      const response = await axios.put(`${BASE_URL}/user/profile`, profileData, {
-        headers: { Authorization: `Bearer ${token}` }
+      // Transform the data to match backend expectations
+      const transformedData = {
+        ...profileData,
+        // Ensure address is sent as a string, not an object
+        address: typeof profileData.address === 'string' 
+          ? profileData.address 
+          : JSON.stringify(profileData.address),
+        // Convert dayjs object to string if it's a dayjs instance
+        dob: profileData.dob && typeof profileData.dob === 'object' && profileData.dob.format
+          ? profileData.dob.format('YYYY-MM-DD')
+          : profileData.dob,
+      };
+
+      console.log('Sending update data:', transformedData); // Debug log
+
+      const response = await axios.put(`${BASE_URL}/user/profile`, transformedData, {
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       });
       
       return response.data;
     } catch (error) {
       console.error('Update profile error:', error);
+      
+      // Log detailed error information
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+        console.error('Response status:', error.response.status);
+        console.error('Response headers:', error.response.headers);
+        
+        // Extract validation errors if they exist
+        const validationErrors = error.response.data?.errors || error.response.data?.message;
+        return rejectWithValue(
+          validationErrors || 'Failed to update profile'
+        );
+      }
+      
       return rejectWithValue(
-        error.response?.data?.message || 'Failed to update profile'
+        error.message || 'Failed to update profile'
       );
     }
   }
 );
+
 
 export const uploadProfilePhoto = createAsyncThunk(
   'profile/uploadProfilePhoto',

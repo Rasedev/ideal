@@ -572,8 +572,8 @@
 }
 
 .navigation:hover {
-    width: 100px; /* Expand size on hover */
-    height: 100px; /* Expand size on hover */
+    width: 60px; /* Expand size on hover */
+    height: 60px; /* Expand size on hover */
     background: rgba(255, 255, 255, 0.2);
     transform: translateY(-50%) scale(1); /* No scale, just expand */
 }

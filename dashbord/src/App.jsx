@@ -44,7 +44,7 @@ import RoleBasedRoute from './components/auth/RoleBasedRoute';
  import AddEmployee from "./components/employees/AddEmployee";
 import AddMember from "./components/members/Addmember";
 import AllMembers from "./components/members/AllMembers";
-import RegistrationsMember from "./components/members/RegistrationsMember";
+// import RegistrationsMember from "./components/members/RegistrationsMember";
 import AllEmployee from "./components/employees/AllEmployee";
 import EmployeeProfile from "./components/employees/EmployeeProfile";
 import AttendanceSystem from "./components/employees/AttendanceSystem";
@@ -104,6 +104,7 @@ import LegalDashboard from './components/legal/LegalDashboard';
 import WelfareReports from "./components/reports/WelfareReports";
 import RoleManagement from './components/admin/RoleManagement';
 import AuditLogs from "./components/admin/AuditLogs";
+
 // import Applications from "./components/apps/Application";
 
 const router = createBrowserRouter(
@@ -268,7 +269,7 @@ const router = createBrowserRouter(
       <Route path="addemployee" element={<AddEmployee />}></Route>
       <Route path="addmember" element={<AddMember />}></Route>
       <Route path="allmember" element={<AllMembers />}></Route>
-      <Route path="registrationsmember" element={<RegistrationsMember />}></Route>
+      {/* <Route path="registrationsmember" element={<RegistrationsMember />}></Route> */}
       <Route path="approvemember" element={<MemberApprovals />}></Route>
       <Route path="allemployee" element={<AllEmployee />}></Route>
       <Route path="/employee/:id" element={<EmployeeProfile />} />
@@ -286,6 +287,7 @@ const router = createBrowserRouter(
       <Route path="committeemembers" element={<CommitteeMembers />}></Route>
       <Route path="committeemeetings" element={<CommitteeMeetings />}></Route>
       <Route path="committeedecisions" element={<CommitteeDecisions />}></Route>
+      
 
       <Route path="installment" element={<MonthlySubscriptions/>}></Route>
       <Route path="paymentsdues" element={<PendingDues/>}></Route>
@@ -642,8 +644,8 @@ const ThemedApp = () => {
           onClick={handleThemeToggle}
           className={`fixed top-8 right-8 z-50 backdrop-blur-sm ${
             currentTheme === 'dark' 
-              ? 'bg-white/10 text-white-400 hover:bg-white/20' 
-              : 'bg-black/10 text-gray-700 hover:bg-black/20'
+              ?  'bg-black/10 text-gray-700 hover:bg-black/20'           
+              :   'bg-white/10 text-white-400 hover:bg-white/20' 
           }`}
           style={{
             boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',

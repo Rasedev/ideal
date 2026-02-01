@@ -740,249 +740,426 @@
 
 /////////////////with arrow add img///////////
 
-import React, { useState, useMemo } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, EffectFade, Pagination, Navigation } from 'swiper/modules';
-import { Link } from 'react-router-dom';
-import { ArrowRightOutlined, HeartOutlined, TeamOutlined, PlayCircleOutlined } from '@ant-design/icons';
+// import React, { useState, useMemo } from 'react';
+// import { Swiper, SwiperSlide } from 'swiper/react';
+// import { Autoplay, EffectFade, Pagination, Navigation } from 'swiper/modules';
+// import { Link } from 'react-router-dom';
+// import { ArrowRightOutlined, HeartOutlined, TeamOutlined, PlayCircleOutlined } from '@ant-design/icons';
 
-// Import images
-import HeroImageH0 from '../../assets/H0.jpg';
-import HeroImageH1 from '../../assets/H8.jpg';
-import HeroImageH2 from '../../assets/H7.jpg';
-import HeroImageH3 from '../../assets/H6.jpg';
-import CompanyLogo from '../../assets/Ideal.png'; // Your company logo
+// // Import images
+// import HeroImageH0 from '../../assets/H0.jpg';
+// import HeroImageH1 from '../../assets/H8.jpg';
+// import HeroImageH2 from '../../assets/H7.jpg';
+// import HeroImageH3 from '../../assets/H6.jpg';
+// import CompanyLogo from '../../assets/Ideal.png'; // Your company logo
 
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/effect-fade';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+// // Import Swiper styles
+// import 'swiper/css';
+// import 'swiper/css/effect-fade';
+// import 'swiper/css/pagination';
+// import 'swiper/css/navigation';
 
-// Import your CSS Module styles
-import styles from './Banner.module.css';
-import Button from '../Button/Button';
+// // Import your CSS Module styles
+// import styles from './Banner.module.css';
+// import Button from '../Button/Button';
 
-// --- SLIDER DATA ---
+// // --- SLIDER DATA ---
+// const slidesData = [
+//     {
+//         id: 1,
+//         background: HeroImageH0,
+//         titleLine1: 'Ala<span class="highlightM">m</span>gir Hossain',
+//         titleLine2: 'City Welfare Association',
+//         subtitle: 'Building a Better Community Together',
+//         buttonText: 'Join Our Mission',
+//         buttonLink: '/register',
+//         badge: 'Non-Profit Organization',
+//         icon: <HeartOutlined />,
+//         buttonVariant: 'primary',
+//         buttonIcon: <ArrowRightOutlined />
+//     },
+//     {
+//         id: 2,
+//         background: HeroImageH1,
+//         titleLine1: 'Community',
+//         titleLine2: 'Development Programs',
+//         subtitle: 'Empowering Local Communities',
+//         buttonText: 'View Programs',
+//         buttonLink: '/programs',
+//         badge: 'Social Welfare',
+//         icon: <TeamOutlined />,
+//         buttonVariant: 'primary',
+//         buttonIcon: <ArrowRightOutlined />
+//     },
+//     {
+//         id: 3,
+//         background: HeroImageH2,
+//         titleLine1: 'Volunteer &',
+//         titleLine2: 'Make a Difference',
+//         subtitle: 'Your Time Can Change Lives',
+//         buttonText: 'Become Volunteer',
+//         buttonLink: '/volunteer',
+//         badge: 'Join Us',
+//         icon: <PlayCircleOutlined />,
+//         buttonVariant: 'primary',
+//         buttonIcon: <ArrowRightOutlined />
+//     },
+//     {
+//         id: 4,
+//         background: HeroImageH3,
+//         titleLine1: '<span class="emergencyText">Emergency</span> Relief',
+//         titleLine2: '& Support',
+//         subtitle: 'Helping When It Matters Most',
+//         buttonText: 'Donate Now',
+//         buttonLink: '/donate',
+//         badge: 'Humanitarian Aid',
+//         icon: <HeartOutlined />,
+//         buttonVariant: 'primary',
+//         buttonIcon: <ArrowRightOutlined />
+//     }
+// ];
+
+// // Helper function to calculate the next/prev slide index
+// const getNextSlideIndex = (currentIndex, length) => (currentIndex + 1) % length;
+// const getPrevSlideIndex = (currentIndex, length) => (currentIndex - 1 + length) % length;
+
+// const Banner = () => {
+//     const [isActive, setIsActive] = useState(0);
+    
+//     // Calculate next and previous slide indexes based on the current active slide
+//     const nextIndex = useMemo(() => getNextSlideIndex(isActive, slidesData.length), [isActive]);
+//     const prevIndex = useMemo(() => getPrevSlideIndex(isActive, slidesData.length), [isActive]);
+
+//     return (
+//         <div className={styles.heroContainer}>
+//             <Swiper
+//                 modules={[Autoplay, EffectFade, Pagination, Navigation]}
+//                 effect={'fade'}
+//                 speed={1500}
+//                 spaceBetween={0}
+//                 slidesPerView={1}
+//                 loop={true}
+//                 autoplay={{
+//                     delay: 5000,
+//                     disableOnInteraction: false,
+//                     pauseOnMouseEnter: true,
+//                 }}
+//                 pagination={{
+//                     clickable: true,
+//                     el: `.${styles.pagination}`,
+//                     bulletClass: styles.bullet,
+//                     bulletActiveClass: styles.bulletActive,
+//                 }}
+//                 navigation={{
+//                     nextEl: `.${styles.next}`,
+//                     prevEl: `.${styles.prev}`,
+//                 }}
+//                 onSlideChange={(swiper) => setIsActive(swiper.realIndex)}
+//                 className={styles.swiper}
+//             >
+//                 {slidesData.map((slide, index) => (
+//                     <SwiperSlide key={slide.id} className={styles.slide}>
+//                         <div className={styles.background}>
+//                             <img 
+//                                 src={slide.background} 
+//                                 alt={`Slide ${index + 1}`}
+//                                 className={`${styles.backgroundImage} ${isActive === index ? styles.zoom : ''}`}
+//                             />
+//                             <div className={styles.overlay}></div>
+//                         </div>
+
+//                         {/* Content with Tailwind Container */}
+//                         <div className={`${styles.content} container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl font-montserrat`}>
+//                             <div className="max-w-4xl">
+//                                 {/* Badge */}
+//                                 <div className={`${styles.badge} ${isActive === index ? styles.animateBadge : ''}`}>
+//                                     <span className={styles.badgeIcon}>{slide.icon}</span>
+//                                     {slide.badge}
+//                                 </div>
+                                
+//                                 {/* Subtitle */}
+//                                 <p className={`${styles.subtitle} ${isActive === index ? styles.animateSubtitle : ''}`}>
+//                                     {slide.subtitle}
+//                                 </p>
+                                
+//                                 {/* Title */}
+//                                 <div className={styles.titleWrapper}>
+//                                     <h1 className={styles.title}>
+//                                         <span 
+//                                             className={`${styles.titleLine1} ${isActive === index ? styles.animateTitle1 : ''}`}
+//                                             dangerouslySetInnerHTML={{ __html: slide.titleLine1 }}
+//                                         ></span>
+//                                         <span className={`${styles.titleLine2} ${isActive === index ? styles.animateTitle2 : ''}`}>
+//                                             {slide.titleLine2}
+//                                         </span>
+//                                     </h1>
+//                                 </div>
+
+//                                 {/* Buttons */}
+//                                 <div className={`${styles.buttons} ${isActive === index ? styles.animateButtons : ''}`}>
+//                                     {/* Primary Button */}
+//                                     <Button
+//                                         title={slide.buttonText}
+//                                         href={slide.buttonLink}
+//                                         variant="primary"
+//                                         icon={slide.buttonIcon}
+//                                         width="220px"
+//                                         height="50px"
+//                                         style={{
+//                                             fontWeight: '600'
+//                                         }}
+//                                     />
+                                    
+//                                     {/* Secondary Button */}
+//                                     <Button
+//                                         title="Learn More"
+//                                         href="/about"
+//                                         variant="secondary"
+//                                         width="160px"
+//                                         height="50px"
+//                                         style={{
+//                                             fontWeight: '600'
+//                                         }}
+//                                     />
+//                                 </div>
+//                             </div>
+//                         </div>
+//                     </SwiperSlide>
+//                 ))}
+
+//                 {/* Custom Navigation with Slide Preview on Hover */}
+//                 <div 
+//                     className={`${styles.navigation} ${styles.prev}`}
+//                 >
+//                     {/* Arrow Icon */}
+//                     {/* <svg className={styles.arrowIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+//                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+//                     </svg> */}
+                    
+//                     {/* Preview Image for PREV Slide */}
+//                     <div className={styles.previewContainer}>
+//                         <img 
+//                             src={slidesData[prevIndex].background} 
+//                             alt={`Previous Slide Preview`} 
+//                             className={styles.previewImage}
+//                         />
+//                         <div className={styles.previewOverlay}></div>
+//                     </div>
+//                 </div>
+
+//                 <div 
+//                     className={`${styles.navigation} ${styles.next}`}
+//                 >
+//                     {/* Arrow Icon */}
+//                     {/* <svg className={styles.arrowIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+//                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+//                     </svg> */}
+                    
+//                     {/* Preview Image for NEXT Slide */}
+//                     <div className={styles.previewContainer}>
+//                         <img 
+//                             src={slidesData[nextIndex].background} 
+//                             alt={`Next Slide Preview`} 
+//                             className={styles.previewImage}
+//                         />
+//                         <div className={styles.previewOverlay}></div>
+//                     </div>
+//                 </div>
+                
+//                 {/* Pagination */}
+//                 <div className={styles.pagination}></div>
+//             </Swiper>
+
+//             {/* Scroll Indicator */}
+//             <div className={styles.scrollIndicator}>
+//                 <div className={styles.scrollArrow}></div>
+//                 <span>Scroll Down</span>
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default Banner;
+
+
+
+import React, { useState, useMemo } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectFade, Pagination, Navigation } from "swiper/modules";
+import {
+  ArrowRightOutlined,
+  HeartOutlined,
+  TeamOutlined,
+  PlayCircleOutlined,
+} from "@ant-design/icons";
+import Button from "../Button/Button";
+
+import HeroImageH0 from "../../assets/H0.jpg";
+import HeroImageH1 from "../../assets/H8.jpg";
+import HeroImageH2 from "../../assets/H7.jpg";
+import HeroImageH3 from "../../assets/H6.jpg";
+
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import styles from "./Banner.module.css";
+
 const slidesData = [
-    {
-        id: 1,
-        background: HeroImageH0,
-        titleLine1: 'Ala<span class="highlightM">m</span>gir Hossain',
-        titleLine2: 'City Welfare Association',
-        subtitle: 'Building a Better Community Together',
-        buttonText: 'Join Our Mission',
-        buttonLink: '/register',
-        badge: 'Non-Profit Organization',
-        icon: <HeartOutlined />,
-        buttonVariant: 'primary',
-        buttonIcon: <ArrowRightOutlined />
-    },
-    {
-        id: 2,
-        background: HeroImageH1,
-        titleLine1: 'Community',
-        titleLine2: 'Development Programs',
-        subtitle: 'Empowering Local Communities',
-        buttonText: 'View Programs',
-        buttonLink: '/programs',
-        badge: 'Social Welfare',
-        icon: <TeamOutlined />,
-        buttonVariant: 'primary',
-        buttonIcon: <ArrowRightOutlined />
-    },
-    {
-        id: 3,
-        background: HeroImageH2,
-        titleLine1: 'Volunteer &',
-        titleLine2: 'Make a Difference',
-        subtitle: 'Your Time Can Change Lives',
-        buttonText: 'Become Volunteer',
-        buttonLink: '/volunteer',
-        badge: 'Join Us',
-        icon: <PlayCircleOutlined />,
-        buttonVariant: 'primary',
-        buttonIcon: <ArrowRightOutlined />
-    },
-    {
-        id: 4,
-        background: HeroImageH3,
-        titleLine1: '<span class="emergencyText">Emergency</span> Relief',
-        titleLine2: '& Support',
-        subtitle: 'Helping When It Matters Most',
-        buttonText: 'Donate Now',
-        buttonLink: '/donate',
-        badge: 'Humanitarian Aid',
-        icon: <HeartOutlined />,
-        buttonVariant: 'primary',
-        buttonIcon: <ArrowRightOutlined />
-    }
+  {
+    id: 1,
+    background: HeroImageH0,
+    titleLine1: "Alamgir Hossain",
+    titleLine2: "City Welfare Association",
+    subtitle: "Building a Better Community Together",
+    buttonText: "Join Our Mission",
+    buttonLink: "/register",
+    badge: "Non-Profit Organization",
+    icon: <HeartOutlined />,
+    buttonIcon: <ArrowRightOutlined />,
+  },
+  {
+    id: 2,
+    background: HeroImageH1,
+    titleLine1: "Community",
+    titleLine2: "Development Programs",
+    subtitle: "Empowering Local Communities",
+    buttonText: "View Programs",
+    buttonLink: "/programs",
+    badge: "Social Welfare",
+    icon: <TeamOutlined />,
+    buttonIcon: <ArrowRightOutlined />,
+  },
+  {
+    id: 3,
+    background: HeroImageH2,
+    titleLine1: "Volunteer &",
+    titleLine2: "Make a Difference",
+    subtitle: "Your Time Can Change Lives",
+    buttonText: "Become Volunteer",
+    buttonLink: "/volunteer",
+    badge: "Join Us",
+    icon: <PlayCircleOutlined />,
+    buttonIcon: <ArrowRightOutlined />,
+  },
+  {
+    id: 4,
+    background: HeroImageH3,
+    titleLine1: "Emergency Relief",
+    titleLine2: "& Support",
+    subtitle: "Helping When It Matters Most",
+    buttonText: "Donate Now",
+    buttonLink: "/donate",
+    badge: "Humanitarian Aid",
+    icon: <HeartOutlined />,
+    buttonIcon: <ArrowRightOutlined />,
+  },
 ];
 
-// Helper function to calculate the next/prev slide index
-const getNextSlideIndex = (currentIndex, length) => (currentIndex + 1) % length;
-const getPrevSlideIndex = (currentIndex, length) => (currentIndex - 1 + length) % length;
+const nextIndexCalc = (current, len) => (current + 1) % len;
+const prevIndexCalc = (current, len) => (current - 1 + len) % len;
 
 const Banner = () => {
-    const [isActive, setIsActive] = useState(0);
-    
-    // Calculate next and previous slide indexes based on the current active slide
-    const nextIndex = useMemo(() => getNextSlideIndex(isActive, slidesData.length), [isActive]);
-    const prevIndex = useMemo(() => getPrevSlideIndex(isActive, slidesData.length), [isActive]);
+  const [isActive, setIsActive] = useState(0);
 
-    return (
-        <div className={styles.heroContainer}>
-            <Swiper
-                modules={[Autoplay, EffectFade, Pagination, Navigation]}
-                effect={'fade'}
-                speed={1500}
-                spaceBetween={0}
-                slidesPerView={1}
-                loop={true}
-                autoplay={{
-                    delay: 5000,
-                    disableOnInteraction: false,
-                    pauseOnMouseEnter: true,
-                }}
-                pagination={{
-                    clickable: true,
-                    el: `.${styles.pagination}`,
-                    bulletClass: styles.bullet,
-                    bulletActiveClass: styles.bulletActive,
-                }}
-                navigation={{
-                    nextEl: `.${styles.next}`,
-                    prevEl: `.${styles.prev}`,
-                }}
-                onSlideChange={(swiper) => setIsActive(swiper.realIndex)}
-                className={styles.swiper}
-            >
-                {slidesData.map((slide, index) => (
-                    <SwiperSlide key={slide.id} className={styles.slide}>
-                        <div className={styles.background}>
-                            <img 
-                                src={slide.background} 
-                                alt={`Slide ${index + 1}`}
-                                className={`${styles.backgroundImage} ${isActive === index ? styles.zoom : ''}`}
-                            />
-                            <div className={styles.overlay}></div>
-                        </div>
+  const nextIndex = useMemo(() => nextIndexCalc(isActive, slidesData.length), [isActive]);
+  const prevIndex = useMemo(() => prevIndexCalc(isActive, slidesData.length), [isActive]);
 
-                        {/* Content with Tailwind Container */}
-                        <div className={`${styles.content} container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl font-montserrat`}>
-                            <div className="max-w-4xl">
-                                {/* Badge */}
-                                <div className={`${styles.badge} ${isActive === index ? styles.animateBadge : ''}`}>
-                                    <span className={styles.badgeIcon}>{slide.icon}</span>
-                                    {slide.badge}
-                                </div>
-                                
-                                {/* Subtitle */}
-                                <p className={`${styles.subtitle} ${isActive === index ? styles.animateSubtitle : ''}`}>
-                                    {slide.subtitle}
-                                </p>
-                                
-                                {/* Title */}
-                                <div className={styles.titleWrapper}>
-                                    <h1 className={styles.title}>
-                                        <span 
-                                            className={`${styles.titleLine1} ${isActive === index ? styles.animateTitle1 : ''}`}
-                                            dangerouslySetInnerHTML={{ __html: slide.titleLine1 }}
-                                        ></span>
-                                        <span className={`${styles.titleLine2} ${isActive === index ? styles.animateTitle2 : ''}`}>
-                                            {slide.titleLine2}
-                                        </span>
-                                    </h1>
-                                </div>
-
-                                {/* Buttons */}
-                                <div className={`${styles.buttons} ${isActive === index ? styles.animateButtons : ''}`}>
-                                    {/* Primary Button */}
-                                    <Button
-                                        title={slide.buttonText}
-                                        href={slide.buttonLink}
-                                        variant="primary"
-                                        icon={slide.buttonIcon}
-                                        width="220px"
-                                        height="50px"
-                                        style={{
-                                            fontWeight: '600'
-                                        }}
-                                    />
-                                    
-                                    {/* Secondary Button */}
-                                    <Button
-                                        title="Learn More"
-                                        href="/about"
-                                        variant="secondary"
-                                        width="160px"
-                                        height="50px"
-                                        style={{
-                                            fontWeight: '600'
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </SwiperSlide>
-                ))}
-
-                {/* Custom Navigation with Slide Preview on Hover */}
-                <div 
-                    className={`${styles.navigation} ${styles.prev}`}
-                >
-                    {/* Arrow Icon */}
-                    {/* <svg className={styles.arrowIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg> */}
-                    
-                    {/* Preview Image for PREV Slide */}
-                    <div className={styles.previewContainer}>
-                        <img 
-                            src={slidesData[prevIndex].background} 
-                            alt={`Previous Slide Preview`} 
-                            className={styles.previewImage}
-                        />
-                        <div className={styles.previewOverlay}></div>
-                    </div>
-                </div>
-
-                <div 
-                    className={`${styles.navigation} ${styles.next}`}
-                >
-                    {/* Arrow Icon */}
-                    {/* <svg className={styles.arrowIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg> */}
-                    
-                    {/* Preview Image for NEXT Slide */}
-                    <div className={styles.previewContainer}>
-                        <img 
-                            src={slidesData[nextIndex].background} 
-                            alt={`Next Slide Preview`} 
-                            className={styles.previewImage}
-                        />
-                        <div className={styles.previewOverlay}></div>
-                    </div>
-                </div>
-                
-                {/* Pagination */}
-                <div className={styles.pagination}></div>
-            </Swiper>
-
-            {/* Scroll Indicator */}
-            <div className={styles.scrollIndicator}>
-                <div className={styles.scrollArrow}></div>
-                <span>Scroll Down</span>
+  return (
+    <div className={styles.heroContainer}>
+      <Swiper
+        modules={[Autoplay, EffectFade, Pagination, Navigation]}
+        effect="fade"
+        speed={1500}
+        slidesPerView={1}
+        loop={true}
+        autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+        pagination={{
+          clickable: true,
+          el: `.${styles.pagination}`,
+          bulletClass: styles.bullet,
+          bulletActiveClass: styles.bulletActive,
+        }}
+        navigation={{ nextEl: `.${styles.next}`, prevEl: `.${styles.prev}` }}
+        onSlideChange={(swiper) => setIsActive(swiper.realIndex)}
+        className={styles.swiper}
+      >
+        {slidesData.map((slide, index) => (
+          <SwiperSlide key={slide.id} className={styles.slide}>
+            <div className={styles.background}>
+              <img
+                src={slide.background}
+                alt={`Slide ${index + 1}`}
+                className={`${styles.backgroundImage} ${isActive === index ? styles.zoom : ""}`}
+              />
+              <div className={styles.overlay}></div>
             </div>
+
+            <div className={`${styles.content} container mx-auto px-4 max-w-7xl`}>
+              <div className="max-w-3xl">
+                <div className={`${styles.badge} ${isActive === index ? styles.animateBadge : ""}`}>
+                  <span className={styles.badgeIcon}>{slide.icon}</span>
+                  {slide.badge}
+                </div>
+
+                <p className={`${styles.subtitle} ${isActive === index ? styles.animateSubtitle : ""}`}>{slide.subtitle}</p>
+
+                <h1 className={styles.title}>
+                  <span className={`${styles.titleLine1} ${isActive === index ? styles.animateTitle1 : ""}`}>{slide.titleLine1}</span>
+                  <span className={`${styles.titleLine2} ${isActive === index ? styles.animateTitle2 : ""}`}>{slide.titleLine2}</span>
+                </h1>
+
+                <div className={`${styles.buttons} ${isActive === index ? styles.animateButtons : ""}`}>
+                  <Button
+                    title={slide.buttonText}
+                    href={slide.buttonLink}
+                    variant="primary"
+                    icon={slide.buttonIcon}
+                    width="220px"
+                    height="50px"
+                    style={{ fontWeight: 600 }}
+                  />
+
+                  <Button
+                    title="Learn More"
+                    href="/about"
+                    variant="secondary"
+                    width="160px"
+                    height="50px"
+                    style={{ fontWeight: 600 }}
+                  />
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
+
+        <div className={`${styles.navigation} ${styles.prev}`}>
+          <div className={styles.previewContainer}>
+            <img src={slidesData[prevIndex].background} alt="Prev Slide" className={styles.previewImage} />
+            <div className={styles.previewOverlay}></div>
+          </div>
         </div>
-    );
+
+        <div className={`${styles.navigation} ${styles.next}`}>
+          <div className={styles.previewContainer}>
+            <img src={slidesData[nextIndex].background} alt="Next Slide" className={styles.previewImage} />
+            <div className={styles.previewOverlay}></div>
+          </div>
+        </div>
+
+        <div className={styles.pagination}></div>
+      </Swiper>
+
+      <div className={styles.scrollIndicator}>
+        <div className={styles.scrollArrow}></div>
+        <span>Scroll Down</span>
+      </div>
+    </div>
+  );
 };
 
 export default Banner;
-
-
-
 
 
 

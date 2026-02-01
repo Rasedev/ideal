@@ -210,6 +210,8 @@
 const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 const { createObjectCsvStringifier } = require("csv-writer");
+const mongoose = require('mongoose');
+
 
 
 const createUserController = async (req, res) => {
@@ -603,30 +605,150 @@ const getUserProfileController = async (req, res) => {
 };
 
 // ✅ Update user profile
+// const updateUserProfileController = async (req, res) => {
+//   try {
+//     const userId = req.user.userId;
+//     const updates = req.body;
+
+//     // Remove sensitive fields that shouldn't be updated via profile
+//     const { password, token, email, role, status, ...safeUpdates } = updates;
+
+//     const user = await User.findByIdAndUpdate(
+//       userId, 
+//       safeUpdates, 
+//       { new: true, runValidators: true }
+//     ).select("-password");
+
+//     if (!user) {
+//       return res.status(404).json({ 
+//         success: false, 
+//         message: "User not found" 
+//       });
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       message: "Profile updated successfully",
+//       user: {
+//         id: user._id,
+//         firstName: user.firstName,
+//         lastName: user.lastName,
+//         email: user.email,
+//         phone: user.phone,
+//         address: user.address,
+//         dob: user.dob,
+//         gender: user.gender,
+//         nidNumber: user.nidNumber,
+//         membershipId: user.membershipId,
+//         committeePosition: user.committeePosition,   
+//         profilePhoto: user.profilePhoto,
+//         division: user.division,
+//         district: user.district,
+//         joinDate: user.joinDate
+//       }
+//     });
+//   } catch (error) {
+//     console.error("❌ Update profile error:", error);
+    
+//     if (error.name === 'ValidationError') {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Validation failed",
+//         errors: Object.values(error.errors).map(e => e.message)
+//       });
+//     }
+
+//     res.status(500).json({
+//       success: false,
+//       message: "Profile update failed",
+//       error: error.message
+//     });
+//   }
+// };
 const updateUserProfileController = async (req, res) => {
   try {
     const userId = req.user.userId;
     const updates = req.body;
 
-    // Remove sensitive fields that shouldn't be updated via profile
+    console.log('🔄 Updating user profile:', { userId, updates });
+
+    // Remove sensitive fields
     const { password, token, email, role, status, ...safeUpdates } = updates;
 
+    // Handle date formatting
+    if (safeUpdates.dob) {
+      safeUpdates.dob = new Date(safeUpdates.dob);
+    }
+
+    // Handle join date if provided
+    if (safeUpdates.joinDate) {
+      safeUpdates.joinDate = new Date(safeUpdates.joinDate);
+    }
+
+    // Handle address string conversion
+    if (safeUpdates.address && typeof safeUpdates.address === 'string') {
+      try {
+        // Try to parse if it's JSON
+        const parsedAddress = JSON.parse(safeUpdates.address);
+        safeUpdates.address = parsedAddress;
+      } catch (e) {
+        // Keep as string if not JSON
+        safeUpdates.address = {
+          street: safeUpdates.address
+        };
+      }
+    }
+
+    // Validate NID number if provided
+    if (safeUpdates.nidNumber) {
+      if (safeUpdates.nidNumber.length < 10) {
+        return res.status(400).json({
+          success: false,
+          message: 'NID number must be at least 10 characters'
+        });
+      }
+    }
+
+    // Find and update user
     const user = await User.findByIdAndUpdate(
-      userId, 
-      safeUpdates, 
-      { new: true, runValidators: true }
-    ).select("-password");
+      userId,
+      { 
+        ...safeUpdates,
+        $inc: { __v: 1 } // Increment version
+      },
+      { 
+        new: true, 
+        runValidators: true,
+        context: 'query' // Enable full validation
+      }
+    ).select('-password -verificationToken -resetPasswordToken');
 
     if (!user) {
-      return res.status(404).json({ 
-        success: false, 
-        message: "User not found" 
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
       });
     }
 
+    // Create activity log
+    await createActivityLog({
+      userId: user._id,
+      activityType: 'PROFILE_UPDATE',
+      action: 'Profile Updated',
+      description: 'Updated profile information',
+      details: JSON.stringify({
+        updatedFields: Object.keys(safeUpdates)
+      })
+    });
+
+    console.log('✅ Profile updated successfully:', {
+      id: user._id,
+      updatedFields: Object.keys(safeUpdates)
+    });
+
     res.status(200).json({
       success: true,
-      message: "Profile updated successfully",
+      message: 'Profile updated successfully',
       user: {
         id: user._id,
         firstName: user.firstName,
@@ -637,25 +759,55 @@ const updateUserProfileController = async (req, res) => {
         dob: user.dob,
         gender: user.gender,
         nidNumber: user.nidNumber,
-        profilePhoto: user.profilePhoto
+        membershipId: user.membershipId,
+        committeePosition: user.committeePosition,
+        profilePhoto: user.profilePhoto,
+        division: user.division,
+        district: user.district,
+        joinDate: user.joinDate,
+        role: user.role,
+        status: user.status,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
       }
     });
+
   } catch (error) {
-    console.error("❌ Update profile error:", error);
+    console.error('❌ Update profile error:', error);
     
     if (error.name === 'ValidationError') {
+      const errors = Object.values(error.errors).map(e => e.message);
       return res.status(400).json({
         success: false,
-        message: "Validation failed",
-        errors: Object.values(error.errors).map(e => e.message)
+        message: 'Validation failed',
+        errors: errors
+      });
+    }
+    
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: 'Duplicate field value entered'
       });
     }
 
     res.status(500).json({
       success: false,
-      message: "Profile update failed",
+      message: 'Profile update failed',
       error: error.message
     });
+  }
+};
+
+// Activity log helper function
+const createActivityLog = async (activityData) => {
+  try {
+    // In a real app, you would save to an Activity collection
+    console.log('📝 Activity Log:', activityData);
+    return true;
+  } catch (error) {
+    console.error('Activity log error:', error);
+    return false;
   }
 };
 
@@ -734,6 +886,115 @@ const changePasswordController = async (req, res) => {
     });
   }
 };
+
+// Add this controller for login history
+const getLoginHistoryController = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    
+    // Get user's last 10 logins
+    const user = await User.findById(userId).select('lastLogin loginCount createdBy createdAt').lean();
+    
+    // Mock login history (in real app, store in separate collection)
+    const loginHistory = [
+      {
+        _id: new mongoose.Types.ObjectId(),
+        device: 'Chrome on Windows',
+        location: 'Dhaka, Bangladesh',
+        ipAddress: '192.168.1.1',
+        timestamp: new Date(),
+        status: 'success'
+      },
+      {
+        _id: new mongoose.Types.ObjectId(),
+        device: 'Firefox on MacOS',
+        location: 'Chittagong, Bangladesh',
+        ipAddress: '192.168.1.2',
+        timestamp: new Date(Date.now() - 86400000), // 1 day ago
+        status: 'success'
+      },
+      {
+        _id: new mongoose.Types.ObjectId(),
+        device: 'Safari on iPhone',
+        location: 'Sylhet, Bangladesh',
+        ipAddress: '192.168.1.3',
+        timestamp: new Date(Date.now() - 172800000), // 2 days ago
+        status: 'success'
+      }
+    ];
+
+    res.status(200).json({
+      success: true,
+      data: loginHistory
+    });
+  } catch (error) {
+    console.error('❌ Get login history error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch login history'
+    });
+  }
+};
+
+// Add this controller for recent activity
+const getRecentActivityController = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    
+    // Mock recent activities (in real app, store in activity collection)
+    const recentActivities = [
+      {
+        _id: new mongoose.Types.ObjectId(),
+        activityType: 'PROFILE_UPDATE',
+        action: 'Profile Updated',
+        description: 'Updated personal information',
+        details: 'Updated phone number and address',
+        timestamp: new Date(),
+        user: userId
+      },
+      {
+        _id: new mongoose.Types.ObjectId(),
+        activityType: 'PASSWORD_CHANGE',
+        action: 'Password Changed',
+        description: 'Changed account password',
+        details: 'Password updated successfully',
+        timestamp: new Date(Date.now() - 3600000), // 1 hour ago
+        user: userId
+      },
+      {
+        _id: new mongoose.Types.ObjectId(),
+        activityType: 'LOGIN',
+        action: 'Login',
+        description: 'User logged into the system',
+        details: 'Successful login from Chrome browser',
+        timestamp: new Date(Date.now() - 7200000), // 2 hours ago
+        user: userId
+      },
+      {
+        _id: new mongoose.Types.ObjectId(),
+        activityType: 'DOCUMENT_UPLOAD',
+        action: 'Document Uploaded',
+        description: 'Uploaded NID document',
+        details: 'NID_2024.pdf uploaded',
+        timestamp: new Date(Date.now() - 86400000), // 1 day ago
+        user: userId
+      }
+    ];
+
+    res.status(200).json({
+      success: true,
+      data: recentActivities
+    });
+  } catch (error) {
+    console.error('❌ Get recent activity error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch recent activity'
+    });
+  }
+};
+
+
 
 ///////////stats///////////
 // // Get user stats
@@ -913,8 +1174,6 @@ const changePasswordController = async (req, res) => {
 
 
 
-
-// ✅ Export functions directly
 module.exports = {
   createUserController,
   getAllUserController,
@@ -928,7 +1187,8 @@ module.exports = {
   updateUserProfileController,
   uploadProfilePhotoController,
   changePasswordController,
- 
+  getLoginHistoryController,
+  getRecentActivityController
   // getUserStatsController,
   // updateUserStatsController
 };

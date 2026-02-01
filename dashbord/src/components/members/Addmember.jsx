@@ -406,7 +406,6 @@ import {
 } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { createMember } from "../slices/memberSlice";
-
 const { Title, Text } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
@@ -478,7 +477,7 @@ const AddMember = () => {
     currentTheme === "dark" ? "bg-gray-800 border-gray-700" : "bg-white";
 
   return (
-    <div className="min-h-screen p-4">
+    <div className="min-h-screen p-3">
       <Card className={`shadow-xl rounded-2xl ${cardClass}`}>
         <div className="text-center mb-8">
           <Title
@@ -519,7 +518,7 @@ const AddMember = () => {
           </Divider>
 
           <Row gutter={[16, 16]}>
-            <Col xs={24} sm={12}>
+            <Col xs={24} sm={8}>
               <Form.Item
                 label="First Name"
                 name="firstName"
@@ -532,7 +531,7 @@ const AddMember = () => {
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={12}>
+            <Col xs={24} sm={8}>
               <Form.Item
                 label="Last Name"
                 name="lastName"
@@ -545,7 +544,7 @@ const AddMember = () => {
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={12}>
+            <Col xs={24} sm={8}>
               <Form.Item
                 label="Email"
                 name="email"
@@ -561,7 +560,7 @@ const AddMember = () => {
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={12}>
+            <Col xs={24} sm={8}>
               <Form.Item
                 label="Phone"
                 name="telephone"
@@ -576,7 +575,7 @@ const AddMember = () => {
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={12}>
+            <Col xs={24} sm={8}>
               <Form.Item label="Date of Birth" name="dob">
                 <DatePicker
                   style={{ width: "100%" }}
@@ -586,7 +585,7 @@ const AddMember = () => {
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={12}>
+            <Col xs={24} sm={8}>
               <Form.Item label="ID Card Number" name="IdCardNumber">
                 <Input
                   prefix={<IdcardOutlined />}
@@ -595,16 +594,40 @@ const AddMember = () => {
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={12}>
+            <Col xs={24} sm={8}>
               <Form.Item label="Father's Name" name="fatherName">
                 <Input placeholder="Enter father's name" />
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={12}>
+            <Col xs={24} sm={8}>
               <Form.Item label="Birthplace" name="birthplace">
                 <Input placeholder="Enter birthplace" />
               </Form.Item>
+            </Col>
+            <Col xs={24} sm={8}>
+              
+
+          <Row gutter={[16, 16]}>
+            <Col xs={24} md={24}>
+              <Form.Item label="Profile Photo">
+                
+                <Upload
+                  listType="picture"
+                  fileList={fileList}
+                  onChange={handleImageChange}
+                  beforeUpload={() => false}
+                  accept="image/*"
+                  maxCount={1}
+                >
+                  <Button icon={<UploadOutlined />}>Select Image</Button>
+                </Upload>
+                <Text type="secondary" className="mt-2 block">
+                  Upload a profile photo (JPG, PNG, JPEG)
+                </Text>
+              </Form.Item>
+            </Col>
+          </Row>
             </Col>
           </Row>
 
@@ -674,7 +697,7 @@ const AddMember = () => {
           </Row>
 
           {/* Profile Photo */}
-          <Divider
+          {/* <Divider
             orientation="left"
             className={currentTheme === "dark" ? "text-white" : ""}
           >
@@ -699,7 +722,7 @@ const AddMember = () => {
                 </Text>
               </Form.Item>
             </Col>
-          </Row>
+          </Row> */}
 
           {/* Submit Button */}
           <div className="text-center mt-8">
@@ -714,6 +737,8 @@ const AddMember = () => {
               >
                 Create Member
               </Button>
+             
+              
               <Button
                 size="large"
                 onClick={() => {

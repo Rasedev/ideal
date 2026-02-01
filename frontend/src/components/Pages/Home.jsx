@@ -176,7 +176,20 @@ import {
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import MainLayout from '../../layouts/MainLayout';
-import HeroSlider from '../Banner/Banner';
+
+// import Stats from './Stats';
+import Team from './Team';
+import News from './News';
+import About from './../About/About';
+import Stats from './../Statistics/Stats';
+import TeamSection from './../Team/TeamSection';
+import TestimonialsSection from './../Testimonials/TestimonialsSection';
+import BlogSection from './../Blog/BlogSection';
+import ContactSection from './../Contact/ContactSection';
+import HeroSection from '../Hero/HeroSection';
+import ServiceFeatures from '../Services/ServiceFeatures';
+import ServicesSection from '../Services/ServicesSection';
+import Banner from './../Banner/Banner';
 
 const Home = () => {
   const { user, logout } = useAuth();
@@ -235,8 +248,27 @@ const Home = () => {
     <MainLayout>
       {/* Hero Slider Section */}
       <section className="relative">
-        <HeroSlider />
-        
+       <Banner/>
+       <ServicesSection/>
+      {/* <Stats /> */}
+      {/* <ServiceFeatures/>
+       <About /> */}
+      {/* <TeamSection />
+      <TestimonialsSection />
+      <BlogSection />
+      <ContactSection /> */}
+
+
+
+
+
+
+
+
+         {/* <Stats/>
+         <Team/>
+         <News/> */}
+         
         {/* User Info Banner */}
         {user && (
           <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20">

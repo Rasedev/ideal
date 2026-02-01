@@ -45,26 +45,26 @@ import App from './App.jsx';
 import './index.css';
 
 // Ant Design theme configuration
-const theme = {
-  token: {
-    colorPrimary: '#1890ff',
-    borderRadius: 8,
-    fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-  },
-};
+// const theme = {
+//   token: {
+//     colorPrimary: '#1890ff',
+//     borderRadius: 8,
+//     fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+//   },
+// };
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  
     <Provider store={store}>
       <BrowserRouter>
-        <ConfigProvider theme={theme}>
+        <ConfigProvider>
           <AuthProvider>
             <App />
           </AuthProvider>
         </ConfigProvider>
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>
+
 );
 
 

@@ -353,11 +353,129 @@
 const User = require("../models/userSchema");
 const Subscription = require("../models/subscriptionSchema");
 
+// async function createMemberController(req, res) {
+//   try {
+//     const {
+//       firstName,
+//       lastName, // ✅ Added missing field
+//       email,
+//       address,
+//       telephone,
+//       fatherName,
+//       birthplace,
+//       dob,
+//       IdCardNumber,
+//       description,
+//       store,
+//       educationalQualification,
+//       role = "Member", // ✅ Added role with default
+//       password = "123456", // ✅ Added default password
+//     } = req.body;
+
+//     // ✅ Check if file exists
+//     if (!req.file) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Profile image is required",
+//       });
+//     }
+
+//     const image = `http://localhost:3000/uploads/${req.file.filename}`;
+
+//     // ✅ Check for duplicate email
+//     const duplicateEmail = await User.findOne({ email });
+//     if (duplicateEmail) {
+//       return res.status(400).json({ 
+//         success: false,
+//         message: "Email already exists" 
+//       });
+//     }
+    
+
+//     // ✅ Validate required fields
+//     if (!firstName || !email || !telephone) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "First name, email, and phone are required fields",
+//       });
+//     }
+
+//     // ✅ Validate date
+//     if (dob && isNaN(Date.parse(dob))) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Invalid date format for 'dob'",
+//       });
+//     }
+
+//     // ✅ Create new member
+//     const member = new User({
+//       firstName,
+//       // lastName: lastName || "", 
+//       lastName, 
+//       email,
+//       address: address || "",
+//       phone: String,
+
+//       // phone: [{
+//       //   number: telephone,
+//       //   type: 'mobile',
+//       //   isPrimary: true,
+//       //   countryCode: '+880', // ✅ Default for Bangladesh
+//       //   verified: false
+//       // }],
+//       fatherName: fatherName || "",
+//       birthplace: birthplace || "",
+//       dateOfBirth: dob ? new Date(dob) : undefined,
+//       IdCardNumber: IdCardNumber || "",
+//       educationalQualification: educationalQualification || "",
+//       description: description || "",
+//       store: store || "",
+//       role: role,
+//       password: password, // ✅ In production, hash this password
+//       profilePhoto: image,
+//       membershipStatus: "active",
+//       isActive: true,
+//       contactPreferences: {
+//         smsEnabled: true,
+//         emailEnabled: true,
+//         callEnabled: true,
+//         preferredContactMethod: "sms"
+//       }
+//     });
+//     member.membershipId = await User.generateMembershipId();
+
+
+//     await member.save();
+
+//     // ✅ Remove password from response
+//     const memberResponse = member.toObject();
+//     delete memberResponse.password;
+
+//     res.status(201).json({
+//       success: true,
+//       message: "Member created successfully!",
+//       member: memberResponse,
+//     });
+//   } catch (error) {
+//     console.error("Member creation failed:", error);
+//     res.status(500).json({
+//       success: false,
+//       message: "Server error while creating member",
+//       error: error.message,
+//     });
+//   }
+// }
+
+// ✅ Get all members
+
+
+
 async function createMemberController(req, res) {
   try {
     const {
       firstName,
-      lastName, // ✅ Added missing field
+      lastName,
       email,
       address,
       telephone,
@@ -368,11 +486,13 @@ async function createMemberController(req, res) {
       description,
       store,
       educationalQualification,
-      role = "Member", // ✅ Added role with default
-      password = "123456", // ✅ Added default password
+      role = "Member",
+      password = "123456"
     } = req.body;
 
-    // ✅ Check if file exists
+    // ---------------------------------------------------------
+    // 1. Validate profile image
+    // ---------------------------------------------------------
     if (!req.file) {
       return res.status(400).json({
         success: false,
@@ -380,82 +500,118 @@ async function createMemberController(req, res) {
       });
     }
 
-    const image = `http://localhost:3000/uploads/${req.file.filename}`;
+    const profilePhoto = `http://localhost:3000/uploads/${req.file.filename}`;
 
-    // ✅ Check for duplicate email
-    const duplicateEmail = await User.findOne({ email });
-    if (duplicateEmail) {
-      return res.status(400).json({ 
-        success: false,
-        message: "Email already exists" 
-      });
-    }
-    
-
-    // ✅ Validate required fields
-    if (!firstName || !email || !telephone) {
+    // ---------------------------------------------------------
+    // 2. Check duplicate email
+    // ---------------------------------------------------------
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: "First name, email, and phone are required fields",
+        message: "Email already exists",
       });
     }
 
-    // ✅ Validate date
-    if (dob && isNaN(Date.parse(dob))) {
+    // ---------------------------------------------------------
+    // 3. Validate required fields
+    // ---------------------------------------------------------
+    if (!firstName || !email || !telephone || !dob) {
       return res.status(400).json({
         success: false,
-        message: "Invalid date format for 'dob'",
+        message:
+          "First name, email, phone, and date of birth are required fields.",
       });
     }
 
-    // ✅ Create new member
+    // ---------------------------------------------------------
+    // 4. Validate DOB format
+    // ---------------------------------------------------------
+    const dateOfBirth = new Date(dob);
+    if (isNaN(dateOfBirth.getTime())) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid date format for DOB. Use YYYY-MM-DD.",
+      });
+    }
+
+    // ---------------------------------------------------------
+    // 5. Committee roles lookup table
+    // ---------------------------------------------------------
+    const committeeRoles = [
+      'President',
+      'ExecutivePresident',
+      'VicePresident',
+      'GeneralSecretary',
+      'JointGeneralSecretary',
+      'OrganizingSecretary',
+      'FinanceSecretary',
+      'PublicityAndPublicationSecretary',
+      'OfficeSecretary',
+      'SocialWelfareAffairsSecretary',
+      'LegalAffairsSecretary',
+      'ReligiousAffairsSecretary',
+      'PriyaAndCulturalAffairsSecretary',
+      'WomensAffairsSecretary',
+      'EnvironmentalAffairsSecretary',
+      'ExecutiveWorkingMember'
+    ];
+
+    let committeePosition = undefined; 
+    if (committeeRoles.includes(role)) {
+      committeePosition = role;
+    }
+
+    // ---------------------------------------------------------
+    // 6. Create new user instance
+    // ---------------------------------------------------------
     const member = new User({
       firstName,
-      // lastName: lastName || "", 
-      lastName, 
+      lastName,
       email,
-      address: address || "",
-      phone: String,
-
-      // phone: [{
-      //   number: telephone,
-      //   type: 'mobile',
-      //   isPrimary: true,
-      //   countryCode: '+880', // ✅ Default for Bangladesh
-      //   verified: false
-      // }],
-      fatherName: fatherName || "",
-      birthplace: birthplace || "",
-      dateOfBirth: dob ? new Date(dob) : undefined,
-      IdCardNumber: IdCardNumber || "",
-      educationalQualification: educationalQualification || "",
-      description: description || "",
-      store: store || "",
-      role: role,
-      password: password, // ✅ In production, hash this password
-      profilePhoto: image,
-      membershipStatus: "active",
+      phone: telephone,
+      fatherName,
+      birthplace,
+      dob: dateOfBirth,
+      IdCardNumber,
+      educationalQualification,
+      address: {
+    street: address || "",
+    city: city || "",
+    state: state || "",
+    country: country || "Bangladesh",
+    postalCode: postalCode || "",
+  },
+      description,
+      store,
+      role,
+      committeePosition,
+      password,
+      profilePhoto,
       isActive: true,
-      contactPreferences: {
-        smsEnabled: true,
-        emailEnabled: true,
-        callEnabled: true,
-        preferredContactMethod: "sms"
-      }
+      status: "active"
     });
-    member.membershipId = await User.generateMembershipId();
 
+    // ---------------------------------------------------------
+    // 7. Auto-generate membership ID (Members + PlotOwners)
+    // ---------------------------------------------------------
+    if (role === "Member" || role === "PlotOwner") {
+      member.membershipId = await User.generateMembershipId();
+    }
 
+    // ---------------------------------------------------------
+    // 8. Save to DB
+    // ---------------------------------------------------------
     await member.save();
 
-    // ✅ Remove password from response
-    const memberResponse = member.toObject();
-    delete memberResponse.password;
+    // Remove password before sending response
+    const responseData = member.toObject();
+    delete responseData.password;
 
     res.status(201).json({
       success: true,
       message: "Member created successfully!",
-      member: memberResponse,
+      member: responseData,
     });
   } catch (error) {
     console.error("Member creation failed:", error);
@@ -467,7 +623,7 @@ async function createMemberController(req, res) {
   }
 }
 
-// ✅ Get all members
+
 const getAllMembers = async (req, res) => {
   try {
     const { page = 1, limit = 10, search, status } = req.query;

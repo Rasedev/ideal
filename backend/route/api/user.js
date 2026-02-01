@@ -20,13 +20,15 @@ const {
   getUserProfileController,
   updateUserProfileController,
   uploadProfilePhotoController,
-  changePasswordController
+  changePasswordController,
+  getLoginHistoryController,
+  getRecentActivityController
 } = require("../../controller/userController");
 
-const { 
-  getLoginHistoryController, 
-  getRecentActivityController 
-} = require("../../controller/activityController");
+// const { 
+//   getLoginHistoryController, 
+//   getRecentActivityController 
+// } = require("../../controller/activityController");
 
 const { refreshTokenController } = require("../../controller/refreshTokenController"); 
 const authMiddleware = require("../../middleware/authMiddleware"); 
@@ -74,14 +76,17 @@ router.put("/profile", updateUserProfileController);
 router.put("/profile/photo", upload.single("profilePhoto"), uploadProfilePhotoController);
 router.put("/change-password", changePasswordController);
 
+
 // ==================== USER SELF-SERVICE ROUTES ====================
 router.get("/me", getCurrentUser);
 router.post("/refresh-token", refreshTokenController);
 router.post("/:userId/refresh-role", forceRefreshUserRole);
 
 // ==================== ACTIVITY LOG ROUTES ====================
-router.get("/login-history", getLoginHistoryController);
-router.get("/recent-activity", getRecentActivityController);
+// router.get("/login-history", getLoginHistoryController);
+// router.get("/recent-activity", getRecentActivityController);
+router.get('/login-history', authMiddleware, getLoginHistoryController);
+router.get('/recent-activity', authMiddleware, getRecentActivityController);
 
 // ==================== LEGACY ROUTES (Keep for backward compatibility) ====================
 router.post("/createuser", upload.single("image"), createUserController);
